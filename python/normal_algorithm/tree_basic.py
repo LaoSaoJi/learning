@@ -13,57 +13,8 @@ class TreeNode(object):
         self.lchild = lchild
         self.rchild = rchild
 
-
-def pre_order_circle(root: Optional[TreeNode]):
-    # 循环实现前序遍历
-    if not root:
-        return
-    queue = [root]
-    while queue:
-        cur = queue.pop()
-        print_val(cur)
-        if cur.rchild:
-            queue.append(cur.rchild)
-        if cur.lchild:
-            queue.append(cur.lchild)
-
-
-def pre_order(node: Optional[TreeNode]):
-    if not node:
-        return
-    print_val(node)
-    pre_order(node.lchild)
-    pre_order(node.rchild)
-
-
-def mid_order(node: Optional[TreeNode]):
-    if not node:
-        return
-    mid_order(node.lchild)
-    print_val(node)
-    mid_order(node.rchild)
-
-
-def post_order(node: Optional[TreeNode]):
-    if not node:
-        return
-    post_order(node.lchild)
-    post_order(node.rchild)
-    print_val(node)
-
-
-def layer_order(node: Optional[TreeNode]):
-    if not node:
-        return
-    queue = [node]
-    while queue:
-        cur = queue[0]
-        print_val(cur)
-        queue = queue[1:]
-        if cur.lchild:
-            queue.append(cur.lchild)
-        if cur.rchild:
-            queue.append(cur.rchild)
+    def print(self):
+        print(f"{self.val} ")
 
 
 def get_test_tree():
@@ -79,10 +30,56 @@ def get_test_tree():
     return nodes[3]
 
 
-def print_val(node: Optional[TreeNode]):
+def pre_order_circle(root: Optional[TreeNode]):
+    # 循环实现前序遍历
+    if not root:
+        return
+    queue = [root]
+    while queue:
+        cur = queue.pop()
+        cur.print()
+        if cur.rchild:
+            queue.append(cur.rchild)
+        if cur.lchild:
+            queue.append(cur.lchild)
+
+
+def pre_order(node: Optional[TreeNode]):
     if not node:
         return
-    print(f"{node.val} ")
+    node.print()
+    pre_order(node.lchild)
+    pre_order(node.rchild)
+
+
+def mid_order(node: Optional[TreeNode]):
+    if not node:
+        return
+    mid_order(node.lchild)
+    node.print()
+    mid_order(node.rchild)
+
+
+def post_order(node: Optional[TreeNode]):
+    if not node:
+        return
+    post_order(node.lchild)
+    post_order(node.rchild)
+    node.print()
+
+
+def layer_order(node: Optional[TreeNode]):
+    if not node:
+        return
+    queue = [node]
+    while queue:
+        cur = queue[0]
+        cur.print()
+        queue = queue[1:]
+        if cur.lchild:
+            queue.append(cur.lchild)
+        if cur.rchild:
+            queue.append(cur.rchild)
 
 
 if __name__ == '__main__':
