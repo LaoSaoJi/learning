@@ -1,7 +1,7 @@
 #  -*- coding: utf-8 -*-
 """
 Author: sanjin
-面试用的各种排序算法
+basic sort algorithm
 """
 
 
