@@ -69,6 +69,7 @@ def post_order(node: Optional[TreeNode]):
 
 
 def layer_order(node: Optional[TreeNode]):
+    # 二叉树的层序遍历
     if not node:
         return
     queue = [node]
@@ -80,6 +81,36 @@ def layer_order(node: Optional[TreeNode]):
             queue.append(cur.lchild)
         if cur.rchild:
             queue.append(cur.rchild)
+
+
+def get_tree_by_preorder_and_midorder(preorder: list, midorder: list):
+    # 根据前序和中序遍历构建二叉树
+
+    def dfs(subpre: list, subin: list):
+        if not subpre:
+            return None
+        head_val = subpre[0]
+        idx = subin.index(head_val)
+        head = TreeNode(head_val)
+        head.lchild = dfs(subpre[1:idx+1], subin[:idx])
+        right_subpre = subpre[-(len(subin)-idx-1):] if len(subin)-idx-1 > 0 else []
+        head.rchild = dfs(right_subpre, subin[idx+1:])
+        return head
+
+    return dfs(preorder, midorder)
+
+
+def build_binary_search_tree(sorted_nums):
+
+    def dfs(sub_nums):
+        if not sub_nums:
+            return None
+        head_index = len(sub_nums) // 2
+        head = TreeNode(sub_nums[head_index])
+        head.lchild = dfs(sub_nums[:head_index])
+        head.rchild = dfs(sub_nums[head_index+1:])
+        return head
+    return dfs(sorted_nums)
 
 
 if __name__ == '__main__':
