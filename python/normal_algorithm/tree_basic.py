@@ -83,7 +83,7 @@ def layer_order(node: Optional[TreeNode]):
             queue.append(cur.rchild)
 
 
-def get_tree_by_preorder_and_midorder(preorder: list, midorder: list):
+def get_tree_by_preorder_and_inorder(preorder: list, inorder: list):
     # 根据前序和中序遍历构建二叉树
 
     def dfs(subpre: list, subin: list):
@@ -92,24 +92,37 @@ def get_tree_by_preorder_and_midorder(preorder: list, midorder: list):
         head_val = subpre[0]
         idx = subin.index(head_val)
         head = TreeNode(head_val)
-        head.lchild = dfs(subpre[1:idx+1], subin[:idx])
-        right_subpre = subpre[-(len(subin)-idx-1):] if len(subin)-idx-1 > 0 else []
-        head.rchild = dfs(right_subpre, subin[idx+1:])
+        head.lchild = dfs(subpre[1:idx + 1], subin[:idx])
+        right_subpre = subpre[-(len(subin) - idx - 1):] if len(subin) - idx - 1 > 0 else []
+        head.rchild = dfs(right_subpre, subin[idx + 1:])
         return head
 
-    return dfs(preorder, midorder)
+    return dfs(preorder, inorder)
+
+
+def get_tree_by_inorder_and_postorder(inorder: list, postorder: list) -> TreeNode:
+    def dfs(subin: list, subpost: list):
+        if not subin:
+            return None
+        head = TreeNode(subpost[-1])
+        idx = subin.index(subpost[-1])
+        head.lchild = dfs(subin[:idx], subpost[:idx])
+        head.rchild = dfs(subin[idx + 1:], subpost[idx:-1])
+        return head
+
+    return dfs(inorder, postorder)
 
 
 def build_binary_search_tree(sorted_nums):
-
     def dfs(sub_nums):
         if not sub_nums:
             return None
         head_index = len(sub_nums) // 2
         head = TreeNode(sub_nums[head_index])
         head.lchild = dfs(sub_nums[:head_index])
-        head.rchild = dfs(sub_nums[head_index+1:])
+        head.rchild = dfs(sub_nums[head_index + 1:])
         return head
+
     return dfs(sorted_nums)
 
 
